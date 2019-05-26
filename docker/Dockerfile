@@ -9,8 +9,6 @@ ENV VERSION=${VERSION}
 ENV DUMB_INIT_VERSION=1.2.1
 ENV SU_EXEC_VERSION=0.2
 
-COPY *.gem /tmp/
-
 ARG DEBIAN_FRONTEND=noninteractive
 # Do not split this into multiple RUN!
 # Docker creates a layer for every RUN-Statement
@@ -36,7 +34,7 @@ RUN apk update \
             multi_json:1.13.1 \
             bigdecimal:1.4.3 \
             kubeclient:4.3.0 \
- && gem install -N /tmp/*.gem \
+            fluent-plugin-k8s-metrics-agg:${VERSION} \
  && apk del .build-deps \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
